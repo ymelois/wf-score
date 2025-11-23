@@ -1,11 +1,13 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct GalvanizedCrosshairs {
     pub stacks: u8,
 }
 
-#[modifier]
 impl Modifier for GalvanizedCrosshairs {
     // When aiming, critical chance is increased by 120% + 40% per headshot kills
     // (up to 5 stacks)

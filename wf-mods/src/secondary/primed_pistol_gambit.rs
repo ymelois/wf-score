@@ -1,9 +1,11 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct PrimedPistolGambit;
 
-#[modifier]
 impl Modifier for PrimedPistolGambit {
     fn critical_chance(
         &self,

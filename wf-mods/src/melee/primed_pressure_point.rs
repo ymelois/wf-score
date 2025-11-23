@@ -1,9 +1,11 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub struct PrimedPressurePoint;
 
-#[modifier]
 impl Modifier for PrimedPressurePoint {
     fn damage(
         &self,

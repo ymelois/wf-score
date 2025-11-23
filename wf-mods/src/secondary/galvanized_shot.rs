@@ -1,11 +1,14 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    StatusesImpl as _,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct GalvanizedShot {
     pub threshold: f32,
 }
 
-#[modifier]
 impl Modifier for GalvanizedShot {
     fn damage(
         &self,

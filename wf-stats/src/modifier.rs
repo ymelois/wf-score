@@ -27,8 +27,10 @@ pub trait Modifier {
     //     W: Weapon + ?Sized;
     fn damage(
         &self,
-        context: &dyn Weapon,
-    ) -> f32;
+        _context: &dyn Weapon,
+    ) -> f32 {
+        0.0
+    }
 
     /// Returns the absolute anti-faction multiplier of the modifier.
     ///
@@ -36,8 +38,10 @@ pub trait Modifier {
     /// Primed Smite Grineer: x1.55 anti-faction multiplier (0.55)
     fn anti_faction(
         &self,
-        context: &dyn Weapon,
-    ) -> f32;
+        _context: &dyn Weapon,
+    ) -> f32 {
+        0.0
+    }
 
     /// Returns the additive critical chance bonus of the modifier.
     ///
@@ -45,8 +49,10 @@ pub trait Modifier {
     /// Sacrificial Steel: +220% critical chance bonus (2.2)
     fn critical_chance(
         &self,
-        context: &dyn Weapon,
-    ) -> f32;
+        _context: &dyn Weapon,
+    ) -> f32 {
+        0.0
+    }
 
     /// Returns the additive critical multiplier bonus of the modifier.
     ///
@@ -54,8 +60,10 @@ pub trait Modifier {
     /// Organ Shatter: +90% critical multiplier bonus (0.9)
     fn critical_multiplier(
         &self,
-        context: &dyn Weapon,
-    ) -> f32;
+        _context: &dyn Weapon,
+    ) -> f32 {
+        0.0
+    }
 
     /// Returns the additive status chance bonus of the modifier.
     ///
@@ -63,8 +71,10 @@ pub trait Modifier {
     /// Melee Prowess: +90% status chance bonus (0.9)
     fn status_chance(
         &self,
-        context: &dyn Weapon,
-    ) -> f32;
+        _context: &dyn Weapon,
+    ) -> f32 {
+        0.0
+    }
 
     /// Returns the additive attack speed bonus of the modifier.
     ///
@@ -74,8 +84,10 @@ pub trait Modifier {
     /// Note: This is a melee-specific modifier.
     fn attack_speed(
         &self,
-        context: &dyn Weapon,
-    ) -> f32;
+        _context: &dyn Weapon,
+    ) -> f32 {
+        0.0
+    }
 
     /// Returns the additive fire rate bonus of the modifier.
     ///
@@ -85,8 +97,10 @@ pub trait Modifier {
     /// Note: This is a primary/secondary-specific modifier.
     fn fire_rate(
         &self,
-        context: &dyn Weapon,
-    ) -> f32;
+        _context: &dyn Weapon,
+    ) -> f32 {
+        0.0
+    }
 
     /// Returns the additive status bonus of the modifier.
     ///
@@ -94,8 +108,10 @@ pub trait Modifier {
     /// North Wind: +90% cold damage (0.9)
     fn status_list(
         &self,
-        context: &dyn Weapon,
-    ) -> Vec<Status>;
+        _context: &dyn Weapon,
+    ) -> Vec<Status> {
+        Vec::new()
+    }
 
     /// Returns the additive ammo maximum bonus of the modifier.
     ///
@@ -105,8 +121,10 @@ pub trait Modifier {
     /// Note: This is a primary/secondary-specific modifier.
     fn ammo_maximum(
         &self,
-        context: &dyn Weapon,
-    ) -> f32;
+        _context: &dyn Weapon,
+    ) -> f32 {
+        0.0
+    }
 
     /// Returns the additive magazine capacity bonus of the modifier.
     ///
@@ -116,8 +134,10 @@ pub trait Modifier {
     /// Note: This is a primary/secondary-specific modifier.
     fn magazine_capacity(
         &self,
-        context: &dyn Weapon,
-    ) -> f32;
+        _context: &dyn Weapon,
+    ) -> f32 {
+        0.0
+    }
 
     /// Returns the additive multishot bonus of the modifier.
     ///
@@ -127,8 +147,10 @@ pub trait Modifier {
     /// Note: This is a primary/secondary-specific modifier.
     fn multishot(
         &self,
-        context: &dyn Weapon,
-    ) -> f32;
+        _context: &dyn Weapon,
+    ) -> f32 {
+        0.0
+    }
 
     /// Returns the additive reload speed bonus of the modifier.
     ///
@@ -138,8 +160,10 @@ pub trait Modifier {
     /// Note: This is a primary/secondary-specific modifier.
     fn reload_speed(
         &self,
-        context: &dyn Weapon,
-    ) -> f32;
+        _context: &dyn Weapon,
+    ) -> f32 {
+        0.0
+    }
 
     /// Returns the cost of the modifier.
     ///
@@ -147,6 +171,8 @@ pub trait Modifier {
     /// Split Chamber: 15
     fn cost(
         &self,
-        context: &dyn Weapon,
-    ) -> u8;
+        _context: &dyn Weapon,
+    ) -> u8 {
+        0
+    }
 }

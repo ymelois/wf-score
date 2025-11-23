@@ -1,9 +1,11 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub struct ExpelGrineer;
 
-#[modifier]
 impl Modifier for ExpelGrineer {
     fn anti_faction(
         &self,

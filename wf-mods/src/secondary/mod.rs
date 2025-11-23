@@ -32,48 +32,43 @@ mod secondary_riven;
 mod sharpened_bullet;
 mod target_cracker;
 
-pub use accelerated_isotope::*;
-pub use amalgam_barrel_diffusion::*;
-pub use anemic_agility::*;
-pub use augur_pact::*;
-pub use barrel_diffusion::*;
-pub use convulsion::*;
-pub use creeping_bullseye::*;
-pub use deep_freeze::*;
-pub use expel_grineer::*;
-pub use frostbite::*;
-pub use galvanized_crosshairs::*;
-pub use galvanized_diffusion::*;
-pub use galvanized_shot::*;
-pub use gunslinger::*;
-pub use heated_charge::*;
-pub use hollow_point::*;
-pub use hornet_strike::*;
-pub use ice_storm::*;
-pub use jolt::*;
-pub use lethal_torrent::*;
-pub use magnum_force::*;
-pub use pathogen_rounds::*;
-pub use pistol_gambit::*;
-pub use pistol_pestilence::*;
-pub use primed_convulsion::*;
-pub use primed_expel_grineer::*;
-pub use primed_heated_charge::*;
-pub use primed_pistol_gambit::*;
-pub use primed_target_cracker::*;
-pub use scorch::*;
-pub use secondary_riven::*;
-pub use sharpened_bullet::*;
-pub use target_cracker::*;
+use std::sync::Arc;
 
-mod common {
-    pub use std::sync::Arc;
+use wf_stats::Modifier;
 
-    pub use wf_modifier_proc_macro::modifier;
-    pub use wf_stats::*;
-}
-
-use common::*;
+pub use self::accelerated_isotope::AcceleratedIsotope;
+pub use self::amalgam_barrel_diffusion::AmalgamBarrelDiffusion;
+pub use self::anemic_agility::AnemicAgility;
+pub use self::augur_pact::AugurPact;
+pub use self::barrel_diffusion::BarrelDiffusion;
+pub use self::convulsion::Convulsion;
+pub use self::creeping_bullseye::CreepingBullseye;
+pub use self::deep_freeze::DeepFreeze;
+pub use self::expel_grineer::ExpelGrineer;
+pub use self::frostbite::Frostbite;
+pub use self::galvanized_crosshairs::GalvanizedCrosshairs;
+pub use self::galvanized_diffusion::GalvanizedDiffusion;
+pub use self::galvanized_shot::GalvanizedShot;
+pub use self::gunslinger::Gunslinger;
+pub use self::heated_charge::HeatedCharge;
+pub use self::hollow_point::HollowPoint;
+pub use self::hornet_strike::HornetStrike;
+pub use self::ice_storm::IceStorm;
+pub use self::jolt::Jolt;
+pub use self::lethal_torrent::LethalTorrent;
+pub use self::magnum_force::MagnumForce;
+pub use self::pathogen_rounds::PathogenRounds;
+pub use self::pistol_gambit::PistolGambit;
+pub use self::pistol_pestilence::PistolPestilence;
+pub use self::primed_convulsion::PrimedConvulsion;
+pub use self::primed_expel_grineer::PrimedExpelGrineer;
+pub use self::primed_heated_charge::PrimedHeatedCharge;
+pub use self::primed_pistol_gambit::PrimedPistolGambit;
+pub use self::primed_target_cracker::PrimedTargetCracker;
+pub use self::scorch::Scorch;
+pub use self::secondary_riven::SecondaryRiven;
+pub use self::sharpened_bullet::SharpenedBullet;
+pub use self::target_cracker::TargetCracker;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum SecondaryMod {
@@ -115,24 +110,24 @@ pub enum SecondaryMod {
 impl Into<Arc<dyn Modifier>> for SecondaryMod {
     fn into(self) -> Arc<dyn Modifier> {
         match self {
-            Self::AcceleratedIsotope => Arc::new(AcceleratedIsotope {}),
-            Self::AmalgamBarrelDiffusion => Arc::new(AmalgamBarrelDiffusion {}),
-            Self::CreepingBullseye => Arc::new(CreepingBullseye {}),
-            Self::HollowPoint => Arc::new(HollowPoint {}),
-            Self::MagnumForce => Arc::new(MagnumForce {}),
-            Self::PrimedConvulsion => Arc::new(PrimedConvulsion {}),
-            Self::Scorch => Arc::new(Scorch {}),
-            Self::AnemicAgility => Arc::new(AnemicAgility {}),
-            Self::DeepFreeze => Arc::new(DeepFreeze {}),
-            Self::HornetStrike => Arc::new(HornetStrike {}),
-            Self::PrimedHeatedCharge => Arc::new(PrimedHeatedCharge {}),
-            Self::AugurPact => Arc::new(AugurPact {}),
-            Self::Frostbite => Arc::new(Frostbite {}),
-            Self::IceStorm => Arc::new(IceStorm {}),
-            Self::PathogenRounds => Arc::new(PathogenRounds {}),
-            Self::PrimedPistolGambit => Arc::new(PrimedPistolGambit {}),
-            Self::SharpenedBullet => Arc::new(SharpenedBullet {}),
-            Self::BarrelDiffusion => Arc::new(BarrelDiffusion {}),
+            Self::AcceleratedIsotope => Arc::new(AcceleratedIsotope),
+            Self::AmalgamBarrelDiffusion => Arc::new(AmalgamBarrelDiffusion),
+            Self::CreepingBullseye => Arc::new(CreepingBullseye),
+            Self::HollowPoint => Arc::new(HollowPoint),
+            Self::MagnumForce => Arc::new(MagnumForce),
+            Self::PrimedConvulsion => Arc::new(PrimedConvulsion),
+            Self::Scorch => Arc::new(Scorch),
+            Self::AnemicAgility => Arc::new(AnemicAgility),
+            Self::DeepFreeze => Arc::new(DeepFreeze),
+            Self::HornetStrike => Arc::new(HornetStrike),
+            Self::PrimedHeatedCharge => Arc::new(PrimedHeatedCharge),
+            Self::AugurPact => Arc::new(AugurPact),
+            Self::Frostbite => Arc::new(Frostbite),
+            Self::IceStorm => Arc::new(IceStorm),
+            Self::PathogenRounds => Arc::new(PathogenRounds),
+            Self::PrimedPistolGambit => Arc::new(PrimedPistolGambit),
+            Self::SharpenedBullet => Arc::new(SharpenedBullet),
+            Self::BarrelDiffusion => Arc::new(BarrelDiffusion),
             Self::GalvanizedCrosshairs(stacks) => Arc::new(GalvanizedCrosshairs {
                 stacks,
             }),
@@ -142,17 +137,17 @@ impl Into<Arc<dyn Modifier>> for SecondaryMod {
             Self::GalvanizedShot(threshold) => Arc::new(GalvanizedShot {
                 threshold,
             }),
-            Self::Gunslinger => Arc::new(Gunslinger {}),
-            Self::Jolt => Arc::new(Jolt {}),
-            Self::PistolGambit => Arc::new(PistolGambit {}),
-            Self::PrimedExpelGrineer => Arc::new(PrimedExpelGrineer {}),
-            Self::ExpelGrineer => Arc::new(ExpelGrineer {}),
-            Self::Convulsion => Arc::new(Convulsion {}),
-            Self::HeatedCharge => Arc::new(HeatedCharge {}),
-            Self::LethalTorrent => Arc::new(LethalTorrent {}),
-            Self::PistolPestilence => Arc::new(PistolPestilence {}),
-            Self::PrimedTargetCracker => Arc::new(PrimedTargetCracker {}),
-            Self::TargetCracker => Arc::new(TargetCracker {}),
+            Self::Gunslinger => Arc::new(Gunslinger),
+            Self::Jolt => Arc::new(Jolt),
+            Self::PistolGambit => Arc::new(PistolGambit),
+            Self::PrimedExpelGrineer => Arc::new(PrimedExpelGrineer),
+            Self::ExpelGrineer => Arc::new(ExpelGrineer),
+            Self::Convulsion => Arc::new(Convulsion),
+            Self::HeatedCharge => Arc::new(HeatedCharge),
+            Self::LethalTorrent => Arc::new(LethalTorrent),
+            Self::PistolPestilence => Arc::new(PistolPestilence),
+            Self::PrimedTargetCracker => Arc::new(PrimedTargetCracker),
+            Self::TargetCracker => Arc::new(TargetCracker),
             Self::Riven(riven) => Arc::new(riven),
         }
     }

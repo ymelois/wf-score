@@ -1,9 +1,11 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub struct PrimedFury;
 
-#[modifier]
 impl Modifier for PrimedFury {
     fn attack_speed(
         &self,

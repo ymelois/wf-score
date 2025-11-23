@@ -1,9 +1,11 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Gunslinger;
 
-#[modifier]
 impl Modifier for Gunslinger {
     fn fire_rate(
         &self,

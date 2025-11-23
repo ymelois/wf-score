@@ -1,4 +1,8 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Status,
+    Weapon,
+};
 
 #[derive(Clone, PartialEq)]
 pub struct MeleeRiven {
@@ -30,7 +34,6 @@ impl MeleeRiven {
     }
 }
 
-#[modifier]
 impl Modifier for MeleeRiven {
     fn damage(
         &self,

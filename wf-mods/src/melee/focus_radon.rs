@@ -1,9 +1,12 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Status,
+    Weapon,
+};
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub struct FocusRadon;
 
-#[modifier]
 impl Modifier for FocusRadon {
     fn status_list(
         &self,

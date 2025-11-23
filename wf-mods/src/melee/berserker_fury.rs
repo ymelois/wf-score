@@ -1,9 +1,11 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct BerserkerFury;
 
-#[modifier]
 impl Modifier for BerserkerFury {
     fn attack_speed(
         &self,

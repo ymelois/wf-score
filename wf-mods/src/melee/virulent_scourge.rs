@@ -1,9 +1,12 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Status,
+    Weapon,
+};
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub struct VirulentScourge;
 
-#[modifier]
 impl Modifier for VirulentScourge {
     fn status_list(
         &self,

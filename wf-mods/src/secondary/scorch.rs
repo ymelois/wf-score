@@ -1,9 +1,12 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Status,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Scorch;
 
-#[modifier]
 impl Modifier for Scorch {
     fn status_chance(
         &self,

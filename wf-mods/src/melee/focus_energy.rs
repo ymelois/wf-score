@@ -1,9 +1,12 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Status,
+    Weapon,
+};
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub struct FocusEnergy;
 
-#[modifier]
 impl Modifier for FocusEnergy {
     fn status_list(
         &self,

@@ -1,11 +1,13 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct GalvanizedDiffusion {
     pub stacks: u8,
 }
 
-#[modifier]
 impl Modifier for GalvanizedDiffusion {
     fn multishot(
         &self,

@@ -1,9 +1,11 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct AnemicAgility;
 
-#[modifier]
 impl Modifier for AnemicAgility {
     fn damage(
         &self,

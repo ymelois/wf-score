@@ -1,9 +1,12 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Status,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct PrimedConvulsion;
 
-#[modifier]
 impl Modifier for PrimedConvulsion {
     fn status_list(
         &self,

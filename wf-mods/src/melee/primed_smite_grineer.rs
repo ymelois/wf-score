@@ -1,9 +1,11 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub struct PrimedSmiteGrineer;
 
-#[modifier]
 impl Modifier for PrimedSmiteGrineer {
     fn anti_faction(
         &self,

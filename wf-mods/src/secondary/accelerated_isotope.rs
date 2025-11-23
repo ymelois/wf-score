@@ -1,9 +1,12 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Status,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct AcceleratedIsotope;
 
-#[modifier]
 impl Modifier for AcceleratedIsotope {
     fn fire_rate(
         &self,

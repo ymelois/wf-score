@@ -1,9 +1,12 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Status,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Jolt;
 
-#[modifier]
 impl Modifier for Jolt {
     fn status_chance(
         &self,

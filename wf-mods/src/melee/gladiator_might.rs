@@ -1,11 +1,13 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub struct GladiatorMight {
     pub combo_multiplier: u8,
 }
 
-#[modifier]
 impl Modifier for GladiatorMight {
     fn set(&self) -> Option<&str> { Some("Gladiator") }
 

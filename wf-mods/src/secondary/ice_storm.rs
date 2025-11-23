@@ -1,9 +1,12 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Status,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct IceStorm;
 
-#[modifier]
 impl Modifier for IceStorm {
     fn magazine_capacity(
         &self,

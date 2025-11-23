@@ -23,39 +23,34 @@ mod volcanic_edge;
 mod voltaic_strike;
 mod weeping_wounds;
 
-pub use berserker_fury::*;
-pub use blood_rush::*;
-pub use condition_overload::*;
-pub use fever_strike::*;
-pub use focus_energy::*;
-pub use focus_radon::*;
-pub use gladiator_might::*;
-pub use melee_riven::*;
-pub use molten_impact::*;
-pub use north_wind::*;
-pub use organ_shatter::*;
-pub use pressure_point::*;
-pub use primed_fever_strike::*;
-pub use primed_fury::*;
-pub use primed_pressure_point::*;
-pub use primed_smite_grineer::*;
-pub use sacrificial_steel::*;
-pub use shocking_touch::*;
-pub use smite_grineer::*;
-pub use vicious_frost::*;
-pub use virulent_scourge::*;
-pub use volcanic_edge::*;
-pub use voltaic_strike::*;
-pub use weeping_wounds::*;
+use std::sync::Arc;
 
-mod common {
-    pub use std::sync::Arc;
+use wf_stats::Modifier;
 
-    pub use wf_modifier_proc_macro::modifier;
-    pub use wf_stats::*;
-}
-
-use common::*;
+pub use self::berserker_fury::BerserkerFury;
+pub use self::blood_rush::BloodRush;
+pub use self::condition_overload::ConditionOverload;
+pub use self::fever_strike::FeverStrike;
+pub use self::focus_energy::FocusEnergy;
+pub use self::focus_radon::FocusRadon;
+pub use self::gladiator_might::GladiatorMight;
+pub use self::melee_riven::MeleeRiven;
+pub use self::molten_impact::MoltenImpact;
+pub use self::north_wind::NorthWind;
+pub use self::organ_shatter::OrganShatter;
+pub use self::pressure_point::PressurePoint;
+pub use self::primed_fever_strike::PrimedFeverStrike;
+pub use self::primed_fury::PrimedFury;
+pub use self::primed_pressure_point::PrimedPressurePoint;
+pub use self::primed_smite_grineer::PrimedSmiteGrineer;
+pub use self::sacrificial_steel::SacrificialSteel;
+pub use self::shocking_touch::ShockingTouch;
+pub use self::smite_grineer::SmiteGrineer;
+pub use self::vicious_frost::ViciousFrost;
+pub use self::virulent_scourge::VirulentScourge;
+pub use self::volcanic_edge::VolcanicEdge;
+pub use self::voltaic_strike::VoltaicStrike;
+pub use self::weeping_wounds::WeepingWounds;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum MeleeMod {
@@ -98,34 +93,34 @@ pub enum MeleeMod {
 impl Into<Arc<dyn Modifier>> for MeleeMod {
     fn into(self) -> Arc<dyn Modifier> {
         match self {
-            Self::BerserkerFury => Arc::new(BerserkerFury {}),
+            Self::BerserkerFury => Arc::new(BerserkerFury),
             Self::BloodRush(combo_multiplier) => Arc::new(BloodRush {
                 combo_multiplier,
             }),
             Self::ConditionOverload(threshold) => Arc::new(ConditionOverload {
                 threshold,
             }),
-            Self::FeverStrike => Arc::new(FeverStrike {}),
-            Self::FocusEnergy => Arc::new(FocusEnergy {}),
-            Self::FocusRadon => Arc::new(FocusRadon {}),
+            Self::FeverStrike => Arc::new(FeverStrike),
+            Self::FocusEnergy => Arc::new(FocusEnergy),
+            Self::FocusRadon => Arc::new(FocusRadon),
             Self::GladiatorMight(combo_multiplier) => Arc::new(GladiatorMight {
                 combo_multiplier,
             }),
-            Self::MoltenImpact => Arc::new(MoltenImpact {}),
-            Self::NorthWind => Arc::new(NorthWind {}),
-            Self::OrganShatter => Arc::new(OrganShatter {}),
-            Self::PressurePoint => Arc::new(PressurePoint {}),
-            Self::PrimedFeverStrike => Arc::new(PrimedFeverStrike {}),
-            Self::PrimedFury => Arc::new(PrimedFury {}),
-            Self::PrimedPressurePoint => Arc::new(PrimedPressurePoint {}),
-            Self::PrimedSmiteGrineer => Arc::new(PrimedSmiteGrineer {}),
-            Self::SacrificialSteel => Arc::new(SacrificialSteel {}),
-            Self::ShockingTouch => Arc::new(ShockingTouch {}),
-            Self::SmiteGrineer => Arc::new(SmiteGrineer {}),
-            Self::ViciousFrost => Arc::new(ViciousFrost {}),
-            Self::VirulentScourge => Arc::new(VirulentScourge {}),
-            Self::VolcanicEdge => Arc::new(VolcanicEdge {}),
-            Self::VoltaicStrike => Arc::new(VoltaicStrike {}),
+            Self::MoltenImpact => Arc::new(MoltenImpact),
+            Self::NorthWind => Arc::new(NorthWind),
+            Self::OrganShatter => Arc::new(OrganShatter),
+            Self::PressurePoint => Arc::new(PressurePoint),
+            Self::PrimedFeverStrike => Arc::new(PrimedFeverStrike),
+            Self::PrimedFury => Arc::new(PrimedFury),
+            Self::PrimedPressurePoint => Arc::new(PrimedPressurePoint),
+            Self::PrimedSmiteGrineer => Arc::new(PrimedSmiteGrineer),
+            Self::SacrificialSteel => Arc::new(SacrificialSteel),
+            Self::ShockingTouch => Arc::new(ShockingTouch),
+            Self::SmiteGrineer => Arc::new(SmiteGrineer),
+            Self::ViciousFrost => Arc::new(ViciousFrost),
+            Self::VirulentScourge => Arc::new(VirulentScourge),
+            Self::VolcanicEdge => Arc::new(VolcanicEdge),
+            Self::VoltaicStrike => Arc::new(VoltaicStrike),
             Self::WeepingWounds(combo_multiplier) => Arc::new(WeepingWounds {
                 combo_multiplier,
             }),

@@ -1,9 +1,11 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct PrimedTargetCracker;
 
-#[modifier]
 impl Modifier for PrimedTargetCracker {
     fn critical_multiplier(
         &self,

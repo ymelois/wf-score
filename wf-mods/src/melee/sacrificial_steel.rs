@@ -1,9 +1,11 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub struct SacrificialSteel;
 
-#[modifier]
 impl Modifier for SacrificialSteel {
     fn set(&self) -> Option<&str> { Some("Sacrificial Steel") }
 

@@ -3,7 +3,6 @@ resolver = "3"
 members = [
   "bruteforce",
   "single-score",
-  "wf-modifier-proc-macro",
   "wf-mods",
   "wf-score",
   "wf-stats",
@@ -67,7 +66,6 @@ string_lit_chars_any = "deny"  # inefficient char iteration on literals
 unused_result_ok = "deny"
 
 [workspace.dependencies]
-wf-modifier-proc-macro = { path = "wf-modifier-proc-macro" }
 wf-mods = { path = "wf-mods" }
 wf-score = { path = "wf-score" }
 wf-stats = { path = "wf-stats" }

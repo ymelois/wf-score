@@ -1,11 +1,13 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub struct WeepingWounds {
     pub combo_multiplier: u8,
 }
 
-#[modifier]
 impl Modifier for WeepingWounds {
     fn status_chance(
         &self,

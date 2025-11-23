@@ -1,9 +1,12 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Status,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Frostbite;
 
-#[modifier]
 impl Modifier for Frostbite {
     fn status_chance(
         &self,

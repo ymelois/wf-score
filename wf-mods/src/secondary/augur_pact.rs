@@ -1,9 +1,11 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct AugurPact;
 
-#[modifier]
 impl Modifier for AugurPact {
     fn damage(
         &self,

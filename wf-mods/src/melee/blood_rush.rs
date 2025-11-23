@@ -1,11 +1,13 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct BloodRush {
     pub combo_multiplier: u8,
 }
 
-#[modifier]
 impl Modifier for BloodRush {
     fn critical_chance(
         &self,

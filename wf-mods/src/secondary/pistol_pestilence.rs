@@ -1,9 +1,12 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Status,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct PistolPestilence;
 
-#[modifier]
 impl Modifier for PistolPestilence {
     fn status_chance(
         &self,

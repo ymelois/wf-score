@@ -1,4 +1,8 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    StatusesImpl as _,
+    Weapon,
+};
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub struct ConditionOverload {
@@ -7,7 +11,6 @@ pub struct ConditionOverload {
     pub threshold: f32,
 }
 
-#[modifier]
 impl Modifier for ConditionOverload {
     fn damage(
         &self,

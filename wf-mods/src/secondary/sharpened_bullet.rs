@@ -1,9 +1,11 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct SharpenedBullet;
 
-#[modifier]
 impl Modifier for SharpenedBullet {
     fn critical_multiplier(
         &self,

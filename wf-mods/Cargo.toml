@@ -9,7 +9,6 @@ publish.workspace = true
 
 [dependencies]
 lazy_static = "1.4.0"
-wf-modifier-proc-macro.workspace = true
 wf-stats.workspace = true
 
 [lints]

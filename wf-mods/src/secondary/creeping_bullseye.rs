@@ -1,9 +1,11 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct CreepingBullseye;
 
-#[modifier]
 impl Modifier for CreepingBullseye {
     fn critical_chance(
         &self,

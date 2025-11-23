@@ -1,9 +1,11 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct BarrelDiffusion;
 
-#[modifier]
 impl Modifier for BarrelDiffusion {
     fn multishot(
         &self,

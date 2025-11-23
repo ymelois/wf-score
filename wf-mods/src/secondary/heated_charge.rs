@@ -1,9 +1,12 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Status,
+    Weapon,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct HeatedCharge;
 
-#[modifier]
 impl Modifier for HeatedCharge {
     fn status_list(
         &self,

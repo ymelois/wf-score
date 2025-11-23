@@ -1,9 +1,12 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Status,
+    Weapon,
+};
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub struct ShockingTouch;
 
-#[modifier]
 impl Modifier for ShockingTouch {
     fn status_list(
         &self,

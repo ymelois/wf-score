@@ -1,9 +1,12 @@
-use super::common::*;
+use wf_stats::{
+    Modifier,
+    Status,
+    Weapon,
+};
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub struct VoltaicStrike;
 
-#[modifier]
 impl Modifier for VoltaicStrike {
     fn status_list(
         &self,
