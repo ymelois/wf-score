@@ -9,3 +9,6 @@ publish.workspace = true
 
 [dependencies]
 wf-stats.workspace = true
+
+[lints]
+workspace = true

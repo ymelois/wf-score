@@ -12,3 +12,6 @@ itertools = "0.12.1"
 wf-mods.workspace = true
 wf-score.workspace = true
 wf-stats.workspace = true
+
+[lints]
+workspace = true

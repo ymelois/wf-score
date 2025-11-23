@@ -9,3 +9,6 @@ publish.workspace = true
 
 [dependencies]
 derivative = "2.2.0"
+
+[lints]
+workspace = true
