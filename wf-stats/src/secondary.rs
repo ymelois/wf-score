@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use derivative::Derivative;
+use derive_more::Debug;
 
 use crate::modifier::{
     Modifier,
@@ -13,8 +13,7 @@ use crate::status::{
 };
 use crate::weapon::Weapon;
 
-#[derive(Derivative, Default, Clone)]
-#[derivative(Debug)]
+#[derive(Debug, Default, Clone)]
 pub struct Secondary {
     pub critical_chance: f32,
     pub critical_multiplier: f32,
@@ -26,7 +25,7 @@ pub struct Secondary {
     pub reload_time: f32,
     pub reload_delay: f32,
     pub status_list: Vec<Status>,
-    #[derivative(Debug = "ignore")]
+    #[debug(skip)]
     pub modifier_list: Vec<Arc<dyn Modifier>>,
 }
 
