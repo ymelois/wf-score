@@ -90,41 +90,41 @@ pub enum MeleeMod {
     Riven(MeleeRiven),
 }
 
-impl Into<Arc<dyn Modifier>> for MeleeMod {
-    fn into(self) -> Arc<dyn Modifier> {
-        match self {
-            Self::BerserkerFury => Arc::new(BerserkerFury),
-            Self::BloodRush(combo_multiplier) => Arc::new(BloodRush {
+impl From<MeleeMod> for Arc<dyn Modifier> {
+    fn from(value: MeleeMod) -> Self {
+        match value {
+            MeleeMod::BerserkerFury => Arc::new(BerserkerFury),
+            MeleeMod::BloodRush(combo_multiplier) => Arc::new(BloodRush {
                 combo_multiplier,
             }),
-            Self::ConditionOverload(threshold) => Arc::new(ConditionOverload {
+            MeleeMod::ConditionOverload(threshold) => Arc::new(ConditionOverload {
                 threshold,
             }),
-            Self::FeverStrike => Arc::new(FeverStrike),
-            Self::FocusEnergy => Arc::new(FocusEnergy),
-            Self::FocusRadon => Arc::new(FocusRadon),
-            Self::GladiatorMight(combo_multiplier) => Arc::new(GladiatorMight {
+            MeleeMod::FeverStrike => Arc::new(FeverStrike),
+            MeleeMod::FocusEnergy => Arc::new(FocusEnergy),
+            MeleeMod::FocusRadon => Arc::new(FocusRadon),
+            MeleeMod::GladiatorMight(combo_multiplier) => Arc::new(GladiatorMight {
                 combo_multiplier,
             }),
-            Self::MoltenImpact => Arc::new(MoltenImpact),
-            Self::NorthWind => Arc::new(NorthWind),
-            Self::OrganShatter => Arc::new(OrganShatter),
-            Self::PressurePoint => Arc::new(PressurePoint),
-            Self::PrimedFeverStrike => Arc::new(PrimedFeverStrike),
-            Self::PrimedFury => Arc::new(PrimedFury),
-            Self::PrimedPressurePoint => Arc::new(PrimedPressurePoint),
-            Self::PrimedSmiteGrineer => Arc::new(PrimedSmiteGrineer),
-            Self::SacrificialSteel => Arc::new(SacrificialSteel),
-            Self::ShockingTouch => Arc::new(ShockingTouch),
-            Self::SmiteGrineer => Arc::new(SmiteGrineer),
-            Self::ViciousFrost => Arc::new(ViciousFrost),
-            Self::VirulentScourge => Arc::new(VirulentScourge),
-            Self::VolcanicEdge => Arc::new(VolcanicEdge),
-            Self::VoltaicStrike => Arc::new(VoltaicStrike),
-            Self::WeepingWounds(combo_multiplier) => Arc::new(WeepingWounds {
+            MeleeMod::MoltenImpact => Arc::new(MoltenImpact),
+            MeleeMod::NorthWind => Arc::new(NorthWind),
+            MeleeMod::OrganShatter => Arc::new(OrganShatter),
+            MeleeMod::PressurePoint => Arc::new(PressurePoint),
+            MeleeMod::PrimedFeverStrike => Arc::new(PrimedFeverStrike),
+            MeleeMod::PrimedFury => Arc::new(PrimedFury),
+            MeleeMod::PrimedPressurePoint => Arc::new(PrimedPressurePoint),
+            MeleeMod::PrimedSmiteGrineer => Arc::new(PrimedSmiteGrineer),
+            MeleeMod::SacrificialSteel => Arc::new(SacrificialSteel),
+            MeleeMod::ShockingTouch => Arc::new(ShockingTouch),
+            MeleeMod::SmiteGrineer => Arc::new(SmiteGrineer),
+            MeleeMod::ViciousFrost => Arc::new(ViciousFrost),
+            MeleeMod::VirulentScourge => Arc::new(VirulentScourge),
+            MeleeMod::VolcanicEdge => Arc::new(VolcanicEdge),
+            MeleeMod::VoltaicStrike => Arc::new(VoltaicStrike),
+            MeleeMod::WeepingWounds(combo_multiplier) => Arc::new(WeepingWounds {
                 combo_multiplier,
             }),
-            Self::Riven(riven) => Arc::new(riven),
+            MeleeMod::Riven(riven) => Arc::new(riven),
         }
     }
 }

@@ -23,11 +23,6 @@ perf = { level = "deny", priority = -1 }
 style = { level = "deny", priority = -1 }
 suspicious = { level = "deny", priority = -1 }
 
-# Enforce no-std friendly code: prefer core/alloc, avoid std.
-alloc_instead_of_core = "deny"  # using alloc when core is sufficient
-std_instead_of_alloc = "deny"   # using std where alloc suffices
-std_instead_of_core = "deny"    # using std where core suffices
-
 # Forbid silent panics via unwrap; force explicit failure context.
 unwrap_used = "deny"  # require expect(..) with a message
 

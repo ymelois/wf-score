@@ -15,7 +15,7 @@ impl Modifier for GalvanizedCrosshairs {
         &self,
         _context: &dyn Weapon,
     ) -> f32 {
-        1.2 + 0.4 * self.stacks.min(5) as f32
+        1.2 + 0.4 * f32::from(self.stacks.min(5))
     }
 
     fn cost(

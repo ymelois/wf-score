@@ -6,32 +6,12 @@ use wf_stats::{
 
 #[derive(Clone, PartialEq)]
 pub struct MeleeRiven {
-    damage: f32,
-    critical_chance: f32,
-    critical_multiplier: f32,
-    status_chance: f32,
-    attack_speed: f32,
-    status_list: Vec<Status>,
-}
-
-impl MeleeRiven {
-    pub fn new(
-        damage: f32,
-        critical_chance: f32,
-        critical_multiplier: f32,
-        status_chance: f32,
-        attack_speed: f32,
-        status_list: Vec<Status>,
-    ) -> Self {
-        Self {
-            damage,
-            critical_chance,
-            critical_multiplier,
-            status_chance,
-            attack_speed,
-            status_list,
-        }
-    }
+    pub damage: f32,
+    pub critical_chance: f32,
+    pub critical_multiplier: f32,
+    pub status_chance: f32,
+    pub attack_speed: f32,
+    pub status_list: Vec<Status>,
 }
 
 impl Modifier for MeleeRiven {

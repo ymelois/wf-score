@@ -35,13 +35,13 @@ pub trait Weapon {
     /// applied.
     ///
     /// Note: This is a primary/secondary-specific modifier.
-    fn ammo_maximum(&self) -> usize;
+    fn ammo_maximum(&self) -> f32;
 
     /// Returns the additive magazine capacity of the weapon with all modifiers
     /// applied.
     ///
     /// Note: This is a primary/secondary-specific modifier.
-    fn magazine_capacity(&self) -> usize;
+    fn magazine_capacity(&self) -> f32;
 
     /// Returns the additive multishot of the weapon with all modifiers applied.
     ///

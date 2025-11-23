@@ -107,48 +107,48 @@ pub enum SecondaryMod {
     Riven(SecondaryRiven),
 }
 
-impl Into<Arc<dyn Modifier>> for SecondaryMod {
-    fn into(self) -> Arc<dyn Modifier> {
-        match self {
-            Self::AcceleratedIsotope => Arc::new(AcceleratedIsotope),
-            Self::AmalgamBarrelDiffusion => Arc::new(AmalgamBarrelDiffusion),
-            Self::CreepingBullseye => Arc::new(CreepingBullseye),
-            Self::HollowPoint => Arc::new(HollowPoint),
-            Self::MagnumForce => Arc::new(MagnumForce),
-            Self::PrimedConvulsion => Arc::new(PrimedConvulsion),
-            Self::Scorch => Arc::new(Scorch),
-            Self::AnemicAgility => Arc::new(AnemicAgility),
-            Self::DeepFreeze => Arc::new(DeepFreeze),
-            Self::HornetStrike => Arc::new(HornetStrike),
-            Self::PrimedHeatedCharge => Arc::new(PrimedHeatedCharge),
-            Self::AugurPact => Arc::new(AugurPact),
-            Self::Frostbite => Arc::new(Frostbite),
-            Self::IceStorm => Arc::new(IceStorm),
-            Self::PathogenRounds => Arc::new(PathogenRounds),
-            Self::PrimedPistolGambit => Arc::new(PrimedPistolGambit),
-            Self::SharpenedBullet => Arc::new(SharpenedBullet),
-            Self::BarrelDiffusion => Arc::new(BarrelDiffusion),
-            Self::GalvanizedCrosshairs(stacks) => Arc::new(GalvanizedCrosshairs {
+impl From<SecondaryMod> for Arc<dyn Modifier> {
+    fn from(value: SecondaryMod) -> Self {
+        match value {
+            SecondaryMod::AcceleratedIsotope => Arc::new(AcceleratedIsotope),
+            SecondaryMod::AmalgamBarrelDiffusion => Arc::new(AmalgamBarrelDiffusion),
+            SecondaryMod::CreepingBullseye => Arc::new(CreepingBullseye),
+            SecondaryMod::HollowPoint => Arc::new(HollowPoint),
+            SecondaryMod::MagnumForce => Arc::new(MagnumForce),
+            SecondaryMod::PrimedConvulsion => Arc::new(PrimedConvulsion),
+            SecondaryMod::Scorch => Arc::new(Scorch),
+            SecondaryMod::AnemicAgility => Arc::new(AnemicAgility),
+            SecondaryMod::DeepFreeze => Arc::new(DeepFreeze),
+            SecondaryMod::HornetStrike => Arc::new(HornetStrike),
+            SecondaryMod::PrimedHeatedCharge => Arc::new(PrimedHeatedCharge),
+            SecondaryMod::AugurPact => Arc::new(AugurPact),
+            SecondaryMod::Frostbite => Arc::new(Frostbite),
+            SecondaryMod::IceStorm => Arc::new(IceStorm),
+            SecondaryMod::PathogenRounds => Arc::new(PathogenRounds),
+            SecondaryMod::PrimedPistolGambit => Arc::new(PrimedPistolGambit),
+            SecondaryMod::SharpenedBullet => Arc::new(SharpenedBullet),
+            SecondaryMod::BarrelDiffusion => Arc::new(BarrelDiffusion),
+            SecondaryMod::GalvanizedCrosshairs(stacks) => Arc::new(GalvanizedCrosshairs {
                 stacks,
             }),
-            Self::GalvanizedDiffusion(stacks) => Arc::new(GalvanizedDiffusion {
+            SecondaryMod::GalvanizedDiffusion(stacks) => Arc::new(GalvanizedDiffusion {
                 stacks,
             }),
-            Self::GalvanizedShot(threshold) => Arc::new(GalvanizedShot {
+            SecondaryMod::GalvanizedShot(threshold) => Arc::new(GalvanizedShot {
                 threshold,
             }),
-            Self::Gunslinger => Arc::new(Gunslinger),
-            Self::Jolt => Arc::new(Jolt),
-            Self::PistolGambit => Arc::new(PistolGambit),
-            Self::PrimedExpelGrineer => Arc::new(PrimedExpelGrineer),
-            Self::ExpelGrineer => Arc::new(ExpelGrineer),
-            Self::Convulsion => Arc::new(Convulsion),
-            Self::HeatedCharge => Arc::new(HeatedCharge),
-            Self::LethalTorrent => Arc::new(LethalTorrent),
-            Self::PistolPestilence => Arc::new(PistolPestilence),
-            Self::PrimedTargetCracker => Arc::new(PrimedTargetCracker),
-            Self::TargetCracker => Arc::new(TargetCracker),
-            Self::Riven(riven) => Arc::new(riven),
+            SecondaryMod::Gunslinger => Arc::new(Gunslinger),
+            SecondaryMod::Jolt => Arc::new(Jolt),
+            SecondaryMod::PistolGambit => Arc::new(PistolGambit),
+            SecondaryMod::PrimedExpelGrineer => Arc::new(PrimedExpelGrineer),
+            SecondaryMod::ExpelGrineer => Arc::new(ExpelGrineer),
+            SecondaryMod::Convulsion => Arc::new(Convulsion),
+            SecondaryMod::HeatedCharge => Arc::new(HeatedCharge),
+            SecondaryMod::LethalTorrent => Arc::new(LethalTorrent),
+            SecondaryMod::PistolPestilence => Arc::new(PistolPestilence),
+            SecondaryMod::PrimedTargetCracker => Arc::new(PrimedTargetCracker),
+            SecondaryMod::TargetCracker => Arc::new(TargetCracker),
+            SecondaryMod::Riven(riven) => Arc::new(riven),
         }
     }
 }

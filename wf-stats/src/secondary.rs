@@ -9,56 +9,29 @@ use crate::modifier::{
 use crate::status::{
     Physical,
     Status,
-    StatusesImpl,
+    StatusesImpl as _,
 };
 use crate::weapon::Weapon;
 
 #[derive(Derivative, Default, Clone)]
 #[derivative(Debug)]
 pub struct Secondary {
-    critical_chance: f32,
-    critical_multiplier: f32,
-    status_chance: f32,
-    fire_rate: f32,
-    multishot: f32,
-    ammo_maximum: usize,
-    magazine_size: usize,
-    reload_time: f32,
-    reload_delay: f32,
-    status_list: Vec<Status>,
+    pub critical_chance: f32,
+    pub critical_multiplier: f32,
+    pub status_chance: f32,
+    pub fire_rate: f32,
+    pub multishot: f32,
+    pub ammo_maximum: f32,
+    pub magazine_size: f32,
+    pub reload_time: f32,
+    pub reload_delay: f32,
+    pub status_list: Vec<Status>,
     #[derivative(Debug = "ignore")]
-    modifier_list: Vec<Arc<dyn Modifier>>,
+    pub modifier_list: Vec<Arc<dyn Modifier>>,
 }
 
 impl Secondary {
-    pub fn new(
-        critical_chance: f32,
-        critical_multiplier: f32,
-        status_chance: f32,
-        fire_rate: f32,
-        multishot: f32,
-        ammo_maximum: usize,
-        magazine_size: usize,
-        reload_time: f32,
-        reload_delay: f32,
-        status_list: Vec<Status>,
-    ) -> Self {
-        Self {
-            critical_chance,
-            critical_multiplier,
-            status_chance,
-            fire_rate,
-            multishot,
-            ammo_maximum,
-            magazine_size,
-            reload_time,
-            reload_delay,
-            status_list,
-            modifier_list: Vec::new(),
-        }
-    }
-
-    fn base_damage(&self) -> f32 { self.status_list.iter().map(|status| status.damage()).sum() }
+    fn base_damage(&self) -> f32 { self.status_list.iter().map(Status::damage).sum() }
 }
 
 impl WeaponModifiers for Secondary {
@@ -74,11 +47,11 @@ impl Weapon for Secondary
 where
     Self: Default,
 {
-    fn attack_speed(&self) -> f32 { Default::default() }
+    fn attack_speed(&self) -> f32 { 0.0 }
 
     fn damage_bonus(&self) -> f32 {
         let mut damage_bonus = 0.0;
-        for modifier in self.modifier_list.iter() {
+        for modifier in &self.modifier_list {
             damage_bonus += modifier.damage(self);
         }
         damage_bonus
@@ -86,7 +59,7 @@ where
 
     fn anti_faction(&self) -> f32 {
         let mut anti_faction = 0.0;
-        for modifier in self.modifier_list.iter() {
+        for modifier in &self.modifier_list {
             let modifier_anti_faction = modifier.anti_faction(self);
             if modifier_anti_faction > anti_faction {
                 anti_faction = modifier_anti_faction;
@@ -97,7 +70,7 @@ where
 
     fn critical_chance(&self) -> f32 {
         let mut critical_chance = 0.0;
-        for modifier in self.modifier_list.iter() {
+        for modifier in &self.modifier_list {
             critical_chance += modifier.critical_chance(self);
         }
         self.critical_chance * (1.0 + critical_chance)
@@ -105,7 +78,7 @@ where
 
     fn critical_multiplier(&self) -> f32 {
         let mut critical_multiplier = 0.0;
-        for modifier in self.modifier_list.iter() {
+        for modifier in &self.modifier_list {
             critical_multiplier += modifier.critical_multiplier(self);
         }
         self.critical_multiplier * (1.0 + critical_multiplier)
@@ -113,7 +86,7 @@ where
 
     fn status_chance(&self) -> f32 {
         let mut status_chance = 0.0;
-        for modifier in self.modifier_list.iter() {
+        for modifier in &self.modifier_list {
             status_chance += modifier.status_chance(self);
         }
         self.status_chance * (1.0 + status_chance)
@@ -121,31 +94,31 @@ where
 
     fn fire_rate(&self) -> f32 {
         let mut fire_rate = 0.0;
-        for modifier in self.modifier_list.iter() {
+        for modifier in &self.modifier_list {
             fire_rate += modifier.fire_rate(self);
         }
         self.fire_rate * (1.0 + fire_rate)
     }
 
-    fn ammo_maximum(&self) -> usize {
+    fn ammo_maximum(&self) -> f32 {
         let mut ammo_maximum = 0.0;
-        for modifier in self.modifier_list.iter() {
+        for modifier in &self.modifier_list {
             ammo_maximum += modifier.ammo_maximum(self);
         }
-        (self.ammo_maximum as f32 * (1.0 + ammo_maximum)) as usize
+        (self.ammo_maximum * (1.0 + ammo_maximum)).floor()
     }
 
-    fn magazine_capacity(&self) -> usize {
+    fn magazine_capacity(&self) -> f32 {
         let mut magazine_capacity = 0.0;
-        for modifier in self.modifier_list.iter() {
+        for modifier in &self.modifier_list {
             magazine_capacity += modifier.magazine_capacity(self);
         }
-        (self.magazine_size as f32 * (1.0 + magazine_capacity)) as usize
+        (self.magazine_size * (1.0 + magazine_capacity)).floor()
     }
 
     fn multishot(&self) -> f32 {
         let mut multishot = 0.0;
-        for modifier in self.modifier_list.iter() {
+        for modifier in &self.modifier_list {
             multishot += modifier.multishot(self);
         }
         self.multishot * (1.0 + multishot)
@@ -153,7 +126,7 @@ where
 
     fn reload_speed(&self) -> f32 {
         let mut reload_speed = 0.0;
-        for modifier in self.modifier_list.iter() {
+        for modifier in &self.modifier_list {
             reload_speed += modifier.reload_speed(self);
         }
         self.reload_time / (1.0 + reload_speed)
@@ -167,21 +140,19 @@ where
         let mut impact = 0.0;
         let mut puncture = 0.0;
         let mut slash = 0.0;
-        for status in self.status_list.iter() {
-            match status {
-                Status::Physical(physical) => match physical {
+        for status in &self.status_list {
+            if let Status::Physical(physical) = status {
+                match physical {
                     Physical::Impact(damage) => impact += damage,
                     Physical::Puncture(damage) => puncture += damage,
                     Physical::Slash(damage) => slash += damage,
-                },
-                _ => {}
+                }
             }
         }
 
         let mut status_list: Vec<Status> = Vec::new();
-        for modifier in self.modifier_list.iter() {
-            for status in modifier.status_list(self) {
-                let mut status = status.clone();
+        for modifier in &self.modifier_list {
+            for mut status in modifier.status_list(self) {
                 match status {
                     Status::Physical(physical) => match physical {
                         Physical::Impact(_) => status.set_damage(status.damage() * impact),
@@ -205,10 +176,11 @@ where
         has_reactor: bool,
     ) -> u8 {
         let mut cost = 0;
-        for modifier in self.modifier_list.iter() {
-            cost += match has_reactor {
-                true => modifier.cost(self).div_ceil(2u8),
-                false => modifier.cost(self),
+        for modifier in &self.modifier_list {
+            cost += if has_reactor {
+                modifier.cost(self).div_ceil(2_u8)
+            } else {
+                modifier.cost(self)
             };
         }
         cost

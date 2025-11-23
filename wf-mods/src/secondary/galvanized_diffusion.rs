@@ -13,7 +13,7 @@ impl Modifier for GalvanizedDiffusion {
         &self,
         _context: &dyn Weapon,
     ) -> f32 {
-        1.1 + 0.3 * self.stacks.min(4) as f32
+        1.1 + 0.3 * f32::from(self.stacks.min(4))
     }
 
     fn cost(

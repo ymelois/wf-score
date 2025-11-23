@@ -7,6 +7,7 @@ pub enum PrimaryElemental {
 }
 
 impl PrimaryElemental {
+    #[must_use]
     pub fn damage(&self) -> f32 {
         match self {
             Self::Cold(cold) => *cold,

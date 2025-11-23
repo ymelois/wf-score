@@ -1,4 +1,14 @@
-#![allow(dead_code, unused_imports, unused_mut, unused_variables)]
+#![allow(
+    dead_code,
+    unused_imports,
+    unused_mut,
+    unused_variables,
+    clippy::needless_pass_by_value,
+    clippy::too_many_arguments,
+    clippy::wildcard_imports,
+    clippy::type_complexity,
+    reason = "testing"
+)]
 
 mod melee_riven;
 mod mod_combinations;
@@ -15,27 +25,28 @@ use crate::mod_combinations::ModCombinations;
 use crate::secondary_riven::generate_secondary_riven_combinations;
 
 fn main() {
-    let dual_toxocyst = Secondary::new(
+    let dual_toxocyst = Secondary {
         // Incarnon Genesis 4th evolution: Commodore's Fortune
         // +20% base critical chance
         // Default critical chance: 0.05
-        0.25,
-        2.0,
-        37.0,
-        1.0,
-        1.0,
-        72,
-        12,
-        2.35,
-        0.0,
-        vec![
+        critical_chance: 0.25,
+        critical_multiplier: 2.0,
+        status_chance: 37.0,
+        fire_rate: 1.0,
+        multishot: 1.0,
+        ammo_maximum: 72.0,
+        magazine_size: 12.0,
+        reload_time: 2.35,
+        reload_delay: 0.0,
+        status_list: vec![
             Status::impact(7.5),
             Status::puncture(60.0),
             Status::slash(7.5),
             // Frenzy buff
             Status::toxin(75.0),
         ],
-    );
+        modifier_list: Vec::new(),
+    };
 
     let dual_toxocyst_riven_disposition = 1.35;
 
@@ -104,8 +115,8 @@ fn main() {
         true,
     );
 
-    println!("Best build: {:?}", best_build);
-    println!("Score: {}", best_score);
+    println!("Best build: {best_build:?}");
+    println!("Score: {best_score}");
 }
 
 /// Brute force the best build for a secondary weapon
@@ -154,7 +165,7 @@ fn bruteforce_secondary(
         for build in mod_combinations {
             let mut weapon = secondary.clone();
 
-            for modifier in build.iter() {
+            for modifier in &build {
                 weapon.add_modifier(modifier.clone().into());
             }
 
@@ -165,12 +176,12 @@ fn bruteforce_secondary(
             let score = score_fn(&weapon);
 
             if score > best_score {
-                best_build = build.clone();
+                best_build.clone_from(&build);
                 best_score = score;
             }
         }
 
-        println!("Score: {}", best_score);
+        println!("Score: {best_score}");
     }
 
     (best_build, best_score)
@@ -226,7 +237,7 @@ fn bruteforce_melee(
         for build in mod_combinations {
             let mut weapon = melee.clone();
 
-            for modifier in build.iter() {
+            for modifier in &build {
                 weapon.add_modifier(modifier.clone().into());
             }
 
@@ -237,12 +248,12 @@ fn bruteforce_melee(
             let score = score_fn(&weapon, animation_time, combo_hits);
 
             if score > best_score {
-                best_build = build.clone();
+                best_build.clone_from(&build);
                 best_score = score;
             }
         }
 
-        println!("Score: {}", best_score);
+        println!("Score: {best_score}");
     }
 
     (best_build, best_score)

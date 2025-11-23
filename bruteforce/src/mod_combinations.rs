@@ -4,48 +4,51 @@ use std::sync::Arc;
 
 use itertools::{
     Combinations,
-    Itertools,
+    Itertools as _,
     Permutations,
     Product,
 };
 use wf_stats::Modifier;
 
-pub struct ModCombinations<'a, T>
+pub struct ModCombinations<'local, T>
 where
     T: Clone + Into<Arc<dyn Modifier>>,
 {
-    mods_iterator_with_riven:
-        Option<Product<Product<Permutations<Iter<'a, T>>, Combinations<Iter<'a, T>>>, Iter<'a, T>>>,
+    mods_iterator_with_riven: Option<
+        Product<
+            Product<Permutations<Iter<'local, T>>, Combinations<Iter<'local, T>>>,
+            Iter<'local, T>,
+        >,
+    >,
     mods_iterator_without_riven:
-        Option<Product<Permutations<Iter<'a, T>>, Combinations<Iter<'a, T>>>>,
-    obligatory_mods: &'a [T],
+        Option<Product<Permutations<Iter<'local, T>>, Combinations<Iter<'local, T>>>>,
+    obligatory_mods: &'local [T],
 }
 
-impl<'a, T> ModCombinations<'a, T>
+impl<'local, T> ModCombinations<'local, T>
 where
     T: Clone + Into<Arc<dyn Modifier>>,
 {
     pub fn new(
         status_mod_count: usize,
         mod_count: usize,
-        status_mods: &'a [T],
-        other_mods: &'a [T],
-        riven_mods: &'a [T],
-        obligatory_mods: &'a [T],
+        status_mods: &'local [T],
+        other_mods: &'local [T],
+        riven_mods: &'local [T],
+        obligatory_mods: &'local [T],
     ) -> Self {
-        let are_riven_mods = riven_mods.len() > 0;
+        let has_riven_mods = !riven_mods.is_empty();
 
         let status_mods_iterator = status_mods.iter().permutations(status_mod_count);
         let other_mods_iterator = other_mods.iter().combinations(
-            (mod_count as isize
-                - status_mod_count as isize
-                - obligatory_mods.len() as isize
-                - if are_riven_mods { 1 } else { 0 })
-            .max(0) as usize,
+            mod_count
+                .saturating_sub(status_mod_count)
+                .saturating_sub(obligatory_mods.len())
+                .saturating_sub(usize::from(has_riven_mods)),
         );
         let riven_mods_iterator = riven_mods.iter();
 
-        let (mods_iterator_with_riven, mods_iterator_without_riven) = if are_riven_mods {
+        let (mods_iterator_with_riven, mods_iterator_without_riven) = if has_riven_mods {
             let iter = status_mods_iterator
                 .cartesian_product(other_mods_iterator)
                 .cartesian_product(riven_mods_iterator);
@@ -63,7 +66,7 @@ where
     }
 }
 
-impl<'a, T> Iterator for ModCombinations<'a, T>
+impl<T> Iterator for ModCombinations<'_, T>
 where
     T: Clone + Into<Arc<dyn Modifier>>,
 {
@@ -73,22 +76,22 @@ where
         if let Some(iter) = &mut self.mods_iterator_with_riven {
             iter.next().map(|((status_mods, other_mods), riven_mod)| {
                 let mut build: Vec<T> = vec![];
-                if status_mods.len() > 0 {
+                if !status_mods.is_empty() {
                     build.push(status_mods[0].clone());
                 }
                 build.push(riven_mod.clone());
-                if status_mods.len() > 0 {
-                    build.extend(status_mods.iter().skip(1).cloned().cloned());
+                if !status_mods.is_empty() {
+                    build.extend(status_mods.iter().skip(1).copied().cloned());
                 }
-                build.extend(other_mods.iter().cloned().cloned());
+                build.extend(other_mods.iter().copied().cloned());
                 build.extend(self.obligatory_mods.iter().cloned());
                 build
             })
         } else if let Some(iter) = &mut self.mods_iterator_without_riven {
             iter.next().map(|(status_mods, other_mods)| {
                 let mut build: Vec<T> = vec![];
-                build.extend(status_mods.iter().cloned().cloned());
-                build.extend(other_mods.iter().cloned().cloned());
+                build.extend(status_mods.iter().copied().cloned());
+                build.extend(other_mods.iter().copied().cloned());
                 build.extend(self.obligatory_mods.iter().cloned());
                 build
             })

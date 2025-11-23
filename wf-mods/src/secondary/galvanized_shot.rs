@@ -17,14 +17,14 @@ impl Modifier for GalvanizedShot {
         let status_list = context.status_list();
         let total_damage = status_list.damage();
 
-        let mut status_count = 0;
+        let mut status_count: u8 = 0;
         for status in status_list {
             if status.damage() / total_damage > self.threshold {
                 status_count += 1;
             }
         }
 
-        0.4 * status_count.min(3) as f32
+        0.4 * f32::from(status_count.min(3))
     }
 
     fn status_chance(

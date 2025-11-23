@@ -1,4 +1,4 @@
-use itertools::Itertools;
+use itertools::Itertools as _;
 use wf_mods::secondary::*;
 use wf_stats::*;
 
@@ -32,9 +32,9 @@ pub enum SecondaryRivenAttribute {
     ReloadSpeed(f32),
 }
 
-impl<'a> FromIterator<&'a SecondaryRivenAttribute> for SecondaryRiven {
-    fn from_iter<T: IntoIterator<Item = &'a SecondaryRivenAttribute>>(iter: T) -> Self {
-        use SecondaryRivenAttribute::*;
+impl<'local> FromIterator<&'local SecondaryRivenAttribute> for SecondaryRiven {
+    fn from_iter<T: IntoIterator<Item = &'local SecondaryRivenAttribute>>(iter: T) -> Self {
+        use SecondaryRivenAttribute as Attrs;
 
         let mut critical_chance = 0.0;
         let mut critical_multiplier = 0.0;
@@ -49,20 +49,20 @@ impl<'a> FromIterator<&'a SecondaryRivenAttribute> for SecondaryRiven {
 
         for attribute in iter {
             match attribute {
-                CriticalChance(value) => critical_chance = *value,
-                CriticalMultiplier(value) => critical_multiplier = *value,
-                Damage(value) => damage = *value,
-                Status(status) => status_list.push(*status),
-                StatusChance(value) => status_chance = *value,
-                FireRate(value) => fire_rate = *value,
-                AmmoMaximum(value) => ammo_maximum = *value,
-                MagazineCapacity(value) => magazine_capacity = *value,
-                Multishot(value) => multishot = *value,
-                ReloadSpeed(value) => reload_speed = *value,
+                Attrs::CriticalChance(value) => critical_chance = *value,
+                Attrs::CriticalMultiplier(value) => critical_multiplier = *value,
+                Attrs::Damage(value) => damage = *value,
+                Attrs::Status(status) => status_list.push(*status),
+                Attrs::StatusChance(value) => status_chance = *value,
+                Attrs::FireRate(value) => fire_rate = *value,
+                Attrs::AmmoMaximum(value) => ammo_maximum = *value,
+                Attrs::MagazineCapacity(value) => magazine_capacity = *value,
+                Attrs::Multishot(value) => multishot = *value,
+                Attrs::ReloadSpeed(value) => reload_speed = *value,
             }
         }
 
-        SecondaryRiven::new(
+        SecondaryRiven {
             damage,
             critical_chance,
             critical_multiplier,
@@ -73,7 +73,7 @@ impl<'a> FromIterator<&'a SecondaryRivenAttribute> for SecondaryRiven {
             reload_speed,
             status_chance,
             status_list,
-        )
+        }
     }
 }
 

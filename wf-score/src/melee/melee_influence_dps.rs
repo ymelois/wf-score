@@ -1,4 +1,8 @@
-use wf_stats::*;
+use wf_stats::{
+    Melee,
+    StatusesImpl as _,
+    Weapon as _,
+};
 
 /// Calculate the average damage per second of the melee influence arcane on a
 /// melee weapon
@@ -8,6 +12,7 @@ use wf_stats::*;
 /// * `melee` - The melee weapon
 /// * `animation_time` - The animation time of the combo from the stance mod
 /// * `combo_hits` - The number of hits in the combo
+#[must_use]
 pub fn melee_influence_dps(
     melee: &Melee,
     animation_time: f32,
@@ -26,8 +31,7 @@ pub fn melee_influence_dps(
 
     let electricity_damage = status_list
         .electricity()
-        .and_then(|e| Some(e.damage()))
-        .unwrap_or(0.0);
+        .map_or(0.0, |status| status.damage());
 
     if electricity_damage == 0.0 {
         return 0.0;
@@ -46,9 +50,6 @@ pub fn melee_influence_dps(
         * (1.0 + critical_chance * (critical_multiplier - 1.0))
         * (1.0 + anti_faction).powf(2.0);
 
-    let melee_influence_dps = (1.0 - (1.0 - melee_influence_chance).powf(18.0))
-        * melee_influence_damage
-        * hits_per_second;
-
-    melee_influence_dps
+    // Average damage per second
+    (1.0 - (1.0 - melee_influence_chance).powf(18.0)) * melee_influence_damage * hits_per_second
 }

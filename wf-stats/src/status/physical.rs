@@ -6,6 +6,7 @@ pub enum Physical {
 }
 
 impl Physical {
+    #[must_use]
     pub fn damage(&self) -> f32 {
         match self {
             Self::Impact(impact) => *impact,

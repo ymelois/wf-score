@@ -1,4 +1,4 @@
-use itertools::Itertools;
+use itertools::Itertools as _;
 use wf_mods::melee::*;
 use wf_stats::*;
 
@@ -24,9 +24,9 @@ pub enum MeleeRivenAttribute {
     AttackSpeed(f32),
 }
 
-impl<'a> FromIterator<&'a MeleeRivenAttribute> for MeleeRiven {
-    fn from_iter<T: IntoIterator<Item = &'a MeleeRivenAttribute>>(iter: T) -> Self {
-        use MeleeRivenAttribute::*;
+impl<'local> FromIterator<&'local MeleeRivenAttribute> for MeleeRiven {
+    fn from_iter<T: IntoIterator<Item = &'local MeleeRivenAttribute>>(iter: T) -> Self {
+        use MeleeRivenAttribute as Attrs;
 
         let mut critical_chance = 0.0;
         let mut critical_multiplier = 0.0;
@@ -37,23 +37,23 @@ impl<'a> FromIterator<&'a MeleeRivenAttribute> for MeleeRiven {
 
         for attribute in iter {
             match attribute {
-                CriticalChance(value) => critical_chance = *value,
-                CriticalMultiplier(value) => critical_multiplier = *value,
-                Damage(value) => damage = *value,
-                Status(status) => status_list.push(*status),
-                StatusChance(value) => status_chance = *value,
-                AttackSpeed(value) => attack_speed = *value,
+                Attrs::CriticalChance(value) => critical_chance = *value,
+                Attrs::CriticalMultiplier(value) => critical_multiplier = *value,
+                Attrs::Damage(value) => damage = *value,
+                Attrs::Status(status) => status_list.push(*status),
+                Attrs::StatusChance(value) => status_chance = *value,
+                Attrs::AttackSpeed(value) => attack_speed = *value,
             }
         }
 
-        MeleeRiven::new(
+        MeleeRiven {
             damage,
             critical_chance,
             critical_multiplier,
             status_chance,
             attack_speed,
             status_list,
-        )
+        }
     }
 }
 

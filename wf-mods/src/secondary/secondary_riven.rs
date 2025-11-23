@@ -6,44 +6,16 @@ use wf_stats::{
 
 #[derive(Clone, PartialEq)]
 pub struct SecondaryRiven {
-    damage: f32,
-    critical_chance: f32,
-    critical_multiplier: f32,
-    fire_rate: f32,
-    ammo_maximum: f32,
-    magazine_capacity: f32,
-    multishot: f32,
-    reload_speed: f32,
-    status_chance: f32,
-    status_list: Vec<Status>,
-}
-
-impl SecondaryRiven {
-    pub fn new(
-        damage: f32,
-        critical_chance: f32,
-        critical_multiplier: f32,
-        fire_rate: f32,
-        ammo_maximum: f32,
-        magazine_capacity: f32,
-        multishot: f32,
-        reload_speed: f32,
-        status_chance: f32,
-        status_list: Vec<Status>,
-    ) -> Self {
-        Self {
-            damage,
-            critical_chance,
-            critical_multiplier,
-            fire_rate,
-            ammo_maximum,
-            magazine_capacity,
-            multishot,
-            reload_speed,
-            status_chance,
-            status_list,
-        }
-    }
+    pub damage: f32,
+    pub critical_chance: f32,
+    pub critical_multiplier: f32,
+    pub fire_rate: f32,
+    pub ammo_maximum: f32,
+    pub magazine_capacity: f32,
+    pub multishot: f32,
+    pub reload_speed: f32,
+    pub status_chance: f32,
+    pub status_list: Vec<Status>,
 }
 
 impl Modifier for SecondaryRiven {
