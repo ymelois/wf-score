@@ -6,6 +6,7 @@
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-analyzer-src.follows = "";
     };
   };
 
@@ -16,44 +17,29 @@
       ...
     }:
     let
-      inherit (nixpkgs) lib;
-
-      supportedSystems = [
-        "aarch64-darwin"
-        "aarch64-linux"
-        "i686-linux"
-        "x86_64-darwin"
-        "x86_64-linux"
-      ];
-
-      forAllSystems =
-        systems: f:
-        lib.genAttrs systems (
-          system:
-          f (
-            import nixpkgs {
-              inherit system;
-              overlays = [ fenix.overlays.default ];
-            }
-          )
-        );
+      forAllSystems = f: builtins.mapAttrs f nixpkgs.legacyPackages;
     in
     {
-      devShells = forAllSystems supportedSystems (pkgs: {
-        default = pkgs.mkShell {
-          buildInputs = [
-            pkgs.rust-analyzer
+      devShells = forAllSystems (
+        system: pkgs:
+        let
+          toolchainFile = fenix.packages."${system}".fromToolchainFile {
+            file = ./rust-toolchain.toml;
+            sha256 = "sha256-p8h3Sl/YRByZfZTAKXdsvF6xEenXKrXSVvpphmZENH4=";
+          };
 
-            # Rust components
-            pkgs.fenix.stable.rustc
-            pkgs.fenix.stable.cargo
-            pkgs.fenix.stable.rust-std
-            pkgs.fenix.stable.clippy
-            pkgs.fenix.stable.rust-src
-            pkgs.fenix.stable.rust-docs
-            pkgs.fenix.latest.rustfmt
+          rustToolchain = fenix.packages."${system}".combine [
+            fenix.packages."${system}".latest.rustfmt
+            toolchainFile
           ];
-        };
-      });
+        in
+        {
+          default = pkgs.mkShell {
+            buildInputs = [
+              rustToolchain
+            ];
+          };
+        }
+      );
     };
 }

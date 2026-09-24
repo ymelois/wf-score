@@ -6,65 +6,77 @@ on:
       - main
     paths:
       - "**/*.rs"
-      - "**/Cargo.toml"
-      - "**/Cargo.lock"
+      - "Cargo.toml"
+      - "Cargo.lock"
+      - "rustfmt.toml"
+      - "rust-toolchain.toml"
+      - "flake.nix"
+      - "flake.lock"
       - ".github/workflows/rust.yml"
   pull_request:
   workflow_dispatch:
 
 jobs:
   test:
-    name: Tests (stable)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
-      - uses: dtolnay/rust-toolchain@stable
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: Swatinem/rust-cache@v2
+        with:
+          cmd-format: "nix develop --command {0}"
 
       - name: cargo test
-        run: cargo test
+        run: nix develop --command cargo test
 
   clippy:
-    name: Clippy (stable)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
-      - uses: dtolnay/rust-toolchain@stable
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
         with:
-          components: clippy
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: Swatinem/rust-cache@v2
+        with:
+          cmd-format: "nix develop --command {0}"
 
       - name: cargo clippy
-        run: cargo clippy -- -D warnings
+        run: nix develop --command cargo clippy -- -D warnings
 
   rustfmt:
-    name: Rustfmt (nightly)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
-      - uses: dtolnay/rust-toolchain@nightly
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
         with:
-          components: rustfmt
-
-      - uses: Swatinem/rust-cache@v2
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: rustfmt --check
-        run: cargo fmt --all --check
+        run: nix develop --command cargo fmt --all --check
 
   build:
-    name: Build (stable)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
-      - uses: dtolnay/rust-toolchain@stable
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: Swatinem/rust-cache@v2
+        with:
+          cmd-format: "nix develop --command {0}"
 
       - name: cargo build
-        run: cargo build --release
+        run: nix develop --command cargo build --release
