@@ -8,11 +8,11 @@ use wf_stats::{
 pub struct VolcanicEdge;
 
 impl Modifier for VolcanicEdge {
-    fn status_list(
+    fn status(
         &self,
         _context: &dyn Weapon,
-    ) -> Vec<Status> {
-        vec![Status::heat(0.6)]
+    ) -> Status {
+        Status::new().heat(0.6)
     }
 
     fn status_chance(

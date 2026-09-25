@@ -1,6 +1,5 @@
 use wf_stats::{
     Secondary,
-    StatusesImpl as _,
     Weapon as _,
 };
 
@@ -16,10 +15,10 @@ pub fn cascadia_flare_dps(secondary: &Secondary) -> f32 {
     let reload_speed = secondary.reload_speed();
     let reload_delay = secondary.reload_delay();
     let _status_chance = secondary.status_chance();
-    let status_list = secondary.status_list();
-    let total_damage = status_list.damage();
+    let status = secondary.status();
+    let total_damage = status.sum();
 
-    let heat_damage = status_list.heat().map_or(0.0, |status| status.damage());
+    let heat_damage = status.heat;
 
     // Cascadia Flare procs on heat status, although the timer is only 10s, it is
     // refreshed on each proc. We can assume that it will be up 100% of the

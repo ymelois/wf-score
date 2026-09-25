@@ -64,7 +64,7 @@ pub trait Weapon {
     /// Note: This method is used to calculate the final statuses of the weapon
     /// when elemental statuses are to be combined (e.g. Heat + Toxin =
     /// Gas).
-    fn status_list(&self) -> Vec<Status>;
+    fn status(&self) -> Status;
 
     /// Returns the modifiers of the weapon.
     fn modifier_list(&self) -> &Vec<Arc<dyn Modifier>>;

@@ -8,11 +8,11 @@ use wf_stats::{
 pub struct VoltaicStrike;
 
 impl Modifier for VoltaicStrike {
-    fn status_list(
+    fn status(
         &self,
         _context: &dyn Weapon,
-    ) -> Vec<Status> {
-        vec![Status::electricity(0.6)]
+    ) -> Status {
+        Status::new().electricity(0.6)
     }
 
     fn status_chance(

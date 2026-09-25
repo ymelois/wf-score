@@ -15,11 +15,11 @@ impl Modifier for Frostbite {
         0.6
     }
 
-    fn status_list(
+    fn status(
         &self,
         _context: &dyn Weapon,
-    ) -> Vec<Status> {
-        vec![Status::cold(0.6)]
+    ) -> Status {
+        Status::new().cold(0.6)
     }
 
     fn cost(

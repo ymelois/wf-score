@@ -8,10 +8,10 @@ use wf_stats::{
 pub struct FocusRadon;
 
 impl Modifier for FocusRadon {
-    fn status_list(
+    fn status(
         &self,
         _context: &dyn Weapon,
-    ) -> Vec<Status> {
-        vec![Status::radiation(0.6)]
+    ) -> Status {
+        Status::new().radiation(0.6)
     }
 }

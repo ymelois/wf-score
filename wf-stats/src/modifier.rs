@@ -106,11 +106,11 @@ pub trait Modifier {
     ///
     /// Example:
     /// North Wind: +90% cold damage (0.9)
-    fn status_list(
+    fn status(
         &self,
         _context: &dyn Weapon,
-    ) -> Vec<Status> {
-        Vec::new()
+    ) -> Status {
+        Status::new()
     }
 
     /// Returns the additive ammo maximum bonus of the modifier.

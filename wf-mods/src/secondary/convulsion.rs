@@ -8,11 +8,11 @@ use wf_stats::{
 pub struct Convulsion;
 
 impl Modifier for Convulsion {
-    fn status_list(
+    fn status(
         &self,
         _context: &dyn Weapon,
-    ) -> Vec<Status> {
-        vec![Status::electricity(0.9)]
+    ) -> Status {
+        Status::new().electricity(0.9)
     }
 
     fn cost(

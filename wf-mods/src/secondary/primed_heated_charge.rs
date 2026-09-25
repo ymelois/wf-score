@@ -8,11 +8,11 @@ use wf_stats::{
 pub struct PrimedHeatedCharge;
 
 impl Modifier for PrimedHeatedCharge {
-    fn status_list(
+    fn status(
         &self,
         _context: &dyn Weapon,
-    ) -> Vec<Status> {
-        vec![Status::heat(1.65)]
+    ) -> Status {
+        Status::new().heat(1.65)
     }
 
     fn cost(

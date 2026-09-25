@@ -6,14 +6,10 @@ use crate::modifier::{
     Modifier,
     WeaponModifiers,
 };
-use crate::status::{
-    Physical,
-    Status,
-    StatusesImpl as _,
-};
+use crate::status::Status;
 use crate::weapon::Weapon;
 
-#[derive(Debug, Default, Clone)]
+#[derive(Debug, Clone)]
 pub struct Secondary {
     pub critical_chance: f32,
     pub critical_multiplier: f32,
@@ -24,13 +20,9 @@ pub struct Secondary {
     pub magazine_size: f32,
     pub reload_time: f32,
     pub reload_delay: f32,
-    pub status_list: Vec<Status>,
+    pub status: Status,
     #[debug(skip)]
     pub modifier_list: Vec<Arc<dyn Modifier>>,
-}
-
-impl Secondary {
-    fn base_damage(&self) -> f32 { self.status_list.iter().map(Status::damage).sum() }
 }
 
 impl WeaponModifiers for Secondary {
@@ -42,10 +34,7 @@ impl WeaponModifiers for Secondary {
     }
 }
 
-impl Weapon for Secondary
-where
-    Self: Default,
-{
+impl Weapon for Secondary {
     fn attack_speed(&self) -> f32 { 0.0 }
 
     fn damage_bonus(&self) -> f32 {
@@ -133,39 +122,15 @@ where
 
     fn reload_delay(&self) -> f32 { self.reload_delay }
 
-    fn status_list(&self) -> Vec<Status> {
-        let base_damage = self.base_damage();
+    fn status(&self) -> Status {
+        let mut status = Status::new();
 
-        let mut impact = 0.0;
-        let mut puncture = 0.0;
-        let mut slash = 0.0;
-        for status in &self.status_list {
-            if let Status::Physical(physical) = status {
-                match physical {
-                    Physical::Impact(damage) => impact += damage,
-                    Physical::Puncture(damage) => puncture += damage,
-                    Physical::Slash(damage) => slash += damage,
-                }
-            }
-        }
-
-        let mut status_list: Vec<Status> = Vec::new();
         for modifier in &self.modifier_list {
-            for mut status in modifier.status_list(self) {
-                match status {
-                    Status::Physical(physical) => match physical {
-                        Physical::Impact(_) => status.set_damage(status.damage() * impact),
-                        Physical::Puncture(_) => status.set_damage(status.damage() * puncture),
-                        Physical::Slash(_) => status.set_damage(status.damage() * slash),
-                    },
-                    _ => status.set_damage(status.damage() * base_damage),
-                }
-                status_list.push(status);
-            }
+            status.apply(&modifier.status(self), &self.status);
         }
 
-        status_list.extend(self.status_list.iter());
-        status_list.merge()
+        status += &self.status;
+        status
     }
 
     fn modifier_list(&self) -> &Vec<Arc<dyn Modifier>> { &self.modifier_list }

@@ -4,7 +4,7 @@ use wf_stats::{
     Weapon,
 };
 
-#[derive(Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct SecondaryRiven {
     pub damage: f32,
     pub critical_chance: f32,
@@ -15,7 +15,7 @@ pub struct SecondaryRiven {
     pub multishot: f32,
     pub reload_speed: f32,
     pub status_chance: f32,
-    pub status_list: Vec<Status>,
+    pub status: Status,
 }
 
 impl Modifier for SecondaryRiven {
@@ -82,11 +82,11 @@ impl Modifier for SecondaryRiven {
         self.status_chance
     }
 
-    fn status_list(
+    fn status(
         &self,
         _context: &dyn Weapon,
-    ) -> Vec<Status> {
-        self.status_list.clone()
+    ) -> Status {
+        self.status.clone()
     }
 
     fn cost(
@@ -97,51 +97,11 @@ impl Modifier for SecondaryRiven {
     }
 }
 
-impl std::fmt::Debug for SecondaryRiven {
-    fn fmt(
-        &self,
-        f: &mut std::fmt::Formatter<'_>,
-    ) -> std::fmt::Result {
-        let mut f = f.debug_struct("SecondaryRiven");
-        if self.damage != 0.0 {
-            f.field("damage", &self.damage);
-        }
-        if self.critical_chance != 0.0 {
-            f.field("critical_chance", &self.critical_chance);
-        }
-        if self.critical_multiplier != 0.0 {
-            f.field("critical_multiplier", &self.critical_multiplier);
-        }
-        if self.fire_rate != 0.0 {
-            f.field("fire_rate", &self.fire_rate);
-        }
-        if self.ammo_maximum != 0.0 {
-            f.field("ammo_maximum", &self.ammo_maximum);
-        }
-        if self.magazine_capacity != 0.0 {
-            f.field("magazine_capacity", &self.magazine_capacity);
-        }
-        if self.multishot != 0.0 {
-            f.field("multishot", &self.multishot);
-        }
-        if self.reload_speed != 0.0 {
-            f.field("reload_speed", &self.reload_speed);
-        }
-        if self.status_chance != 0.0 {
-            f.field("status_chance", &self.status_chance);
-        }
-        if !self.status_list.is_empty() {
-            f.field("status_list", &self.status_list);
-        }
-        f.finish()
-    }
-}
-
 impl std::ops::Mul<f32> for SecondaryRiven {
     type Output = Self;
 
     fn mul(
-        mut self,
+        self,
         rhs: f32,
     ) -> Self::Output {
         Self {
@@ -154,11 +114,7 @@ impl std::ops::Mul<f32> for SecondaryRiven {
             multishot: self.multishot * rhs,
             reload_speed: self.reload_speed * rhs,
             status_chance: self.status_chance * rhs,
-            status_list: self
-                .status_list
-                .drain(..)
-                .map(|status| status * rhs)
-                .collect(),
+            status: self.status * rhs,
         }
     }
 }

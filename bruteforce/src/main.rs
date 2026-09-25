@@ -38,13 +38,12 @@ fn main() {
         magazine_size: 12.0,
         reload_time: 2.35,
         reload_delay: 0.0,
-        status_list: vec![
-            Status::impact(7.5),
-            Status::puncture(60.0),
-            Status::slash(7.5),
+        status: Status::new()
+            .impact(7.5)
+            .puncture(60.0)
+            .slash(7.5)
             // Frenzy buff
-            Status::toxin(75.0),
-        ],
+            .toxin(75.0),
         modifier_list: Vec::new(),
     };
 

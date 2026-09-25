@@ -6,10 +6,10 @@ const MELEE_RIVEN_BASE_BONUS_LIST: [MeleeRivenAttribute; 9] = [
     MeleeRivenAttribute::CriticalChance(1.80),
     MeleeRivenAttribute::CriticalMultiplier(0.9),
     MeleeRivenAttribute::Damage(1.647),
-    MeleeRivenAttribute::Status(Status::cold(0.9)),
-    MeleeRivenAttribute::Status(Status::electricity(0.9)),
-    MeleeRivenAttribute::Status(Status::heat(0.9)),
-    MeleeRivenAttribute::Status(Status::toxin(0.9)),
+    MeleeRivenAttribute::Status(Status::new().cold(0.9)),
+    MeleeRivenAttribute::Status(Status::new().electricity(0.9)),
+    MeleeRivenAttribute::Status(Status::new().heat(0.9)),
+    MeleeRivenAttribute::Status(Status::new().toxin(0.9)),
     MeleeRivenAttribute::StatusChance(0.9),
     MeleeRivenAttribute::AttackSpeed(0.549),
 ];
@@ -33,14 +33,14 @@ impl<'local> FromIterator<&'local MeleeRivenAttribute> for MeleeRiven {
         let mut damage = 0.0;
         let mut status_chance = 0.0;
         let mut attack_speed = 0.0;
-        let mut status_list = Vec::new();
+        let mut status = Status::new();
 
         for attribute in iter {
             match attribute {
                 Attrs::CriticalChance(value) => critical_chance = *value,
                 Attrs::CriticalMultiplier(value) => critical_multiplier = *value,
                 Attrs::Damage(value) => damage = *value,
-                Attrs::Status(status) => status_list.push(*status),
+                Attrs::Status(status2) => status += status2,
                 Attrs::StatusChance(value) => status_chance = *value,
                 Attrs::AttackSpeed(value) => attack_speed = *value,
             }
@@ -52,7 +52,7 @@ impl<'local> FromIterator<&'local MeleeRivenAttribute> for MeleeRiven {
             critical_multiplier,
             status_chance,
             attack_speed,
-            status_list,
+            status,
         }
     }
 }

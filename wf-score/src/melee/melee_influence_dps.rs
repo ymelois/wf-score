@@ -1,6 +1,5 @@
 use wf_stats::{
     Melee,
-    StatusesImpl as _,
     Weapon as _,
 };
 
@@ -26,12 +25,10 @@ pub fn melee_influence_dps(
     let critical_multiplier = melee.critical_multiplier();
     let anti_faction = melee.anti_faction();
     let status_chance = melee.status_chance();
-    let status_list = melee.status_list();
-    let total_damage = status_list.damage();
+    let status = melee.status();
+    let total_damage = status.sum();
 
-    let electricity_damage = status_list
-        .electricity()
-        .map_or(0.0, |status| status.damage());
+    let electricity_damage = status.electricity;
 
     if electricity_damage == 0.0 {
         return 0.0;
@@ -44,7 +41,8 @@ pub fn melee_influence_dps(
     let melee_influence_chance = melee_influence_chance.min(1.0); // Cap at 100%
 
     // Damage per hit
-    let melee_influence_base_damage = total_damage - status_list.physical().damage();
+    let melee_influence_base_damage =
+        total_damage - (status.impact + status.puncture + status.slash);
     let melee_influence_damage = melee_influence_base_damage
         * (1.0 + damage_bonus)
         * (1.0 + critical_chance * (critical_multiplier - 1.0))

@@ -8,11 +8,11 @@ use wf_stats::{
 pub struct DeepFreeze;
 
 impl Modifier for DeepFreeze {
-    fn status_list(
+    fn status(
         &self,
         _context: &dyn Weapon,
-    ) -> Vec<Status> {
-        vec![Status::cold(0.9)]
+    ) -> Status {
+        Status::new().cold(0.9)
     }
 
     fn cost(

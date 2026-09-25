@@ -6,10 +6,10 @@ const SECONDARY_RIVEN_BASE_BONUS_LIST: [SecondaryRivenAttribute; 13] = [
     SecondaryRivenAttribute::CriticalChance(1.4999),
     SecondaryRivenAttribute::CriticalMultiplier(0.9),
     SecondaryRivenAttribute::Damage(2.196),
-    SecondaryRivenAttribute::Status(Status::cold(0.9)),
-    SecondaryRivenAttribute::Status(Status::electricity(0.9)),
-    SecondaryRivenAttribute::Status(Status::heat(0.9)),
-    SecondaryRivenAttribute::Status(Status::toxin(0.9)),
+    SecondaryRivenAttribute::Status(Status::new().cold(0.9)),
+    SecondaryRivenAttribute::Status(Status::new().electricity(0.9)),
+    SecondaryRivenAttribute::Status(Status::new().heat(0.9)),
+    SecondaryRivenAttribute::Status(Status::new().toxin(0.9)),
     SecondaryRivenAttribute::StatusChance(0.9),
     SecondaryRivenAttribute::FireRate(0.747),
     SecondaryRivenAttribute::AmmoMaximum(0.9),
@@ -45,14 +45,14 @@ impl<'local> FromIterator<&'local SecondaryRivenAttribute> for SecondaryRiven {
         let mut multishot = 0.0;
         let mut reload_speed = 0.0;
         let mut status_chance = 0.0;
-        let mut status_list = Vec::new();
+        let mut status = Status::new();
 
         for attribute in iter {
             match attribute {
                 Attrs::CriticalChance(value) => critical_chance = *value,
                 Attrs::CriticalMultiplier(value) => critical_multiplier = *value,
                 Attrs::Damage(value) => damage = *value,
-                Attrs::Status(status) => status_list.push(*status),
+                Attrs::Status(status2) => status += status2,
                 Attrs::StatusChance(value) => status_chance = *value,
                 Attrs::FireRate(value) => fire_rate = *value,
                 Attrs::AmmoMaximum(value) => ammo_maximum = *value,
@@ -72,7 +72,7 @@ impl<'local> FromIterator<&'local SecondaryRivenAttribute> for SecondaryRiven {
             multishot,
             reload_speed,
             status_chance,
-            status_list,
+            status,
         }
     }
 }

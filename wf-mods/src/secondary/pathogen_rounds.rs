@@ -8,11 +8,11 @@ use wf_stats::{
 pub struct PathogenRounds;
 
 impl Modifier for PathogenRounds {
-    fn status_list(
+    fn status(
         &self,
         _context: &dyn Weapon,
-    ) -> Vec<Status> {
-        vec![Status::toxin(0.9)]
+    ) -> Status {
+        Status::new().toxin(0.9)
     }
 
     fn cost(

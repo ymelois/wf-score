@@ -1,6 +1,5 @@
 use wf_stats::{
     Secondary,
-    StatusesImpl as _,
     Weapon as _,
 };
 
@@ -16,8 +15,8 @@ pub fn raw_damage(secondary: &Secondary) -> f32 {
     let reload_speed = secondary.reload_speed();
     let reload_delay = secondary.reload_delay();
     let _status_chance = secondary.status_chance();
-    let status_list = secondary.status_list();
-    let total_damage = status_list.damage();
+    let status = secondary.status();
+    let total_damage = status.sum();
 
     let secondary_damage_per_hit = total_damage
         * (1.0 + damage_bonus)

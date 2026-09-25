@@ -4,14 +4,14 @@ use wf_stats::{
     Weapon,
 };
 
-#[derive(Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct MeleeRiven {
     pub damage: f32,
     pub critical_chance: f32,
     pub critical_multiplier: f32,
     pub status_chance: f32,
     pub attack_speed: f32,
-    pub status_list: Vec<Status>,
+    pub status: Status,
 }
 
 impl Modifier for MeleeRiven {
@@ -50,39 +50,11 @@ impl Modifier for MeleeRiven {
         self.attack_speed
     }
 
-    fn status_list(
+    fn status(
         &self,
         _context: &dyn Weapon,
-    ) -> Vec<Status> {
-        self.status_list.clone()
-    }
-}
-
-impl std::fmt::Debug for MeleeRiven {
-    fn fmt(
-        &self,
-        f: &mut std::fmt::Formatter<'_>,
-    ) -> std::fmt::Result {
-        let mut f = f.debug_struct("MeleeRiven");
-        if self.damage != 0.0 {
-            f.field("damage", &self.damage);
-        }
-        if self.critical_chance != 0.0 {
-            f.field("critical_chance", &self.critical_chance);
-        }
-        if self.critical_multiplier != 0.0 {
-            f.field("critical_multiplier", &self.critical_multiplier);
-        }
-        if self.status_chance != 0.0 {
-            f.field("status_chance", &self.status_chance);
-        }
-        if self.attack_speed != 0.0 {
-            f.field("attack_speed", &self.attack_speed);
-        }
-        if !self.status_list.is_empty() {
-            f.field("status_list", &self.status_list);
-        }
-        f.finish()
+    ) -> Status {
+        self.status.clone()
     }
 }
 
@@ -90,7 +62,7 @@ impl std::ops::Mul<f32> for MeleeRiven {
     type Output = Self;
 
     fn mul(
-        mut self,
+        self,
         rhs: f32,
     ) -> Self::Output {
         Self {
@@ -99,11 +71,7 @@ impl std::ops::Mul<f32> for MeleeRiven {
             critical_multiplier: self.critical_multiplier * rhs,
             status_chance: self.status_chance * rhs,
             attack_speed: self.attack_speed * rhs,
-            status_list: self
-                .status_list
-                .drain(..)
-                .map(|status| status * rhs)
-                .collect(),
+            status: self.status * rhs,
         }
     }
 }
